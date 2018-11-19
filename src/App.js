@@ -1,6 +1,5 @@
 
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 let idTask=2;
@@ -88,7 +87,7 @@ username: "", email:"", text:"", image_path:"" ,
 
     Entrance () {
 
-  if (this.state.loginUsername=="admin" && this.state.loginPassword=="123") {  console.log("вошел администратор");
+  if (this.state.loginUsername==="admin" && this.state.loginPassword==="123") {  console.log("вошел администратор");
   this.setState({
     administration: true
 })
@@ -106,7 +105,6 @@ username: "", email:"", text:"", image_path:"" ,
       loginPassword: event.target.value
   })
   }
-
 
 AddCompleteTask (element) {
 let newList=this.state.list
@@ -156,30 +154,29 @@ console.log(this.state.NumberEditTask)
     <label>
         <p><b>Новая задача</b></p>
         <div>
-      Имя:   <input type="text"  value={this.state.username} onChange={this.userNameHandleChange} placeholder="Вася"/> <br />
-      Почта:  <input type="email"  value={this.state.email} onChange={this.emailNandleChange}  placeholder="email@mail.com" /> <br />
-      Задача: <input type="text"  value={this.state.text} onChange={this.taskHandleChange}  placeholder="Сходить в кино"/> <br />
-      Загрузить иконку:  <input type="text" value={this.state.image_path} onChange={this.imageHandleChange} name="images" value=""/>
-            </div>
+          Имя:   <input type="text"  value={this.state.username} onChange={this.userNameHandleChange} placeholder="Вася"/> <br />
+          Почта:  <input type="email"  value={this.state.email} onChange={this.emailNandleChange}  placeholder="email@mail.com" /> <br />
+          Задача: <input type="text"  value={this.state.text} onChange={this.taskHandleChange}  placeholder="Сходить в кино"/> <br />
+          Загрузить иконку:  <input type="text" value={this.state.image_path} onChange={this.imageHandleChange}/>
+       </div>
     </label>
-    <button onClick={PreviewListTask}> Предварительный просмотр</button>
-    <button onClick={this.AddTaskToList}> Отправить задачу </button> <br /> <br />
-    <button onClick={this.FilterUserNameList}> по имени пользователя </button>
-    <button onClick={this.FilterEmailUserList}> по email пользователя </button>
-    <button onClick={this.FilterStatusTaskList}> по статусу </button>
+        <button onClick={PreviewListTask}> Предварительный просмотр</button>
+        <button onClick={this.AddTaskToList}> Отправить задачу </button> <br /> <br />
+        <button onClick={this.FilterUserNameList}> по имени пользователя </button>
+        <button onClick={this.FilterEmailUserList}> по email пользователя </button>
+        <button onClick={this.FilterStatusTaskList}> по статусу </button>
   </form>
 
 <ul >
 {}
 {this.state.list.map(function(element, index) {
-  {console.log(self)}
   return (<li key={index}>
   {self.state.administration ? <button onClick={self.EditAdministrationTask.bind(null, element)}> Редактировать </button> : <div> </div>}
 {console.log("self.state.NumberEditTask",self.state.NumberEditTask, "element.id", element.id)}
-    { (self.state.NumberEditTask=="element.id") ?  <input type="text"  value={this.state.username} onChange={this.userNameHandleChange} placeholder="Вася"/> : element.username}
+    { (self.state.NumberEditTask==="element.id") ?  <input type="text"  value={this.state.username} onChange={this.userNameHandleChange} placeholder="Вася"/> : element.username}
     {element.email}
     {element.text}
-    <img src={element.image_path} width="100px" height="80px"/>
+    <img src={element.image_path} alt="картинка" width="100px" height="80px"/>
     <button onClick={self.AddCompleteTask.bind(null, element)}> {(element.complete)? "выполнено" : "не выполнено"} </button>
 
   { self.state.administration ? <button onClick={self.EditAdministrationTask.bind(null, element)}> Сохранить </button> : <div> </div>}
