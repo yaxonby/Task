@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Login from "./Component/Login"
 import CreateNewTask from "./Component/CreateNewTask"
 import ViewListTask from "./Component/ViewListTask"
+import FilterTask  from "./Component/FilterTask"
 
 import './App.css';
 
 
 let idTask=2;
-let viewTask=0;
+
 
 class App extends Component {
 
@@ -17,22 +18,22 @@ console.log(this.state)
 
 this.state={ username: "", email:"", text:"", image_path:"",
 list: this.props.taskList.list, loginUsername:"", loginPassword:"", administration: false,
-NumberEditTask: null }
+NumberEditTask: null, viewTask:3}
 
 this.userNameHandleChange = this.userNameHandleChange.bind(this);
 this.emailNandleChange = this.emailNandleChange.bind(this);
 this.taskHandleChange = this.taskHandleChange.bind(this);
 this.imageHandleChange = this.imageHandleChange.bind(this);
 this.AddTaskToList = this.AddTaskToList.bind(this);
-this.FilterUserNameList=this.FilterUserNameList.bind(this);
+this.NewStateFilter=this.NewStateFilter.bind(this);
 this.Entrance=this.Entrance.bind(this);
 this.loginUserNameHandleChange=this.loginUserNameHandleChang.bind(this);
 this.loginPasswordHandleChange=this.loginPasswordHandleChange.bind(this);
 this.AddCompleteTask=this.AddCompleteTask.bind(this);
 this.EditAdministrationTask=this.EditAdministrationTask.bind(this);
 this.SaveEditAdministrationTask=this.SaveEditAdministrationTask.bind(this);
-this.PreviousViewTask=this.PreviousViewTask.bind(this);
-this.NextViewTask=this.NextViewTask.bind(this);
+//this.PreviousViewTask=this.PreviousViewTask.bind(this);
+//this.NextViewTask=this.NextViewTask.bind(this);
   }
 
   userNameHandleChange(event) {
@@ -100,7 +101,6 @@ SaveEditAdministrationTask (element) {
    image_path: this.state.image_path,
    complete: element.complete
   }
-//let editTask=this.state.list[element.id]
 
 let newTaskAddToList=[ ...this.state.list]
 console.log("newTaskAddToList=", newTaskAddToList)
@@ -114,28 +114,16 @@ list: newTaskAddToList  })
 
 };
 
-NextViewTask() {
-//this.state.list.length
-if (this.state.list.length>3) {
-viewTask=3
-}
-
-}
 
 
-PreviousViewTask() {
-
-
-}
-
-    FilterUserNameList() {
-//      [...state.ItemToCart.filter(function(x) {
-//       return (x.id!==action.payload.id)}), action.payload]
-
-    }
+NewStateFilter(listSort) {
+console.log("пришло")
+   this.setState({list: listSort})
+ };
 
   render() {
-    const self=this
+
+    const self=this;
     function PreviewListTask() {    }
 
     return (
@@ -161,9 +149,6 @@ PreviousViewTask() {
     taskHandleChange={this.taskHandleChange}
     imageHandleChange={this.imageHandleChange} />
 
-<button onClick={this.FilterUserNameList}> по имени пользователя </button>
-<button onClick={this.FilterEmailUserList}> по email пользователя </button>
-<button onClick={this.FilterStatusTaskList}> по статусу </button>
 
 <ViewListTask
   username={this.state.username}
@@ -172,6 +157,7 @@ PreviousViewTask() {
   image_path={this.state.image_path}
   list={this.state.list}
   NumberEditTask={this.state.NumberEditTask}
+  viewTask={this.state.viewTask}
 
   administration={this.state.administration}
   EditAdministrationTask={this.EditAdministrationTask}
@@ -183,9 +169,14 @@ PreviousViewTask() {
   SaveEditAdministrationTask={this.SaveEditAdministrationTask}
 />
 
+<FilterTask
+list={this.state.list}
+NewStateFilter={this.NewStateFilter}
+viewTask={this.state.viewTask}
+self={this}
 
-<button onClick={this.PreviousViewTask}> приведущие </button>
-<button onClick={this.NextViewTask}> следующие </button>
+/>
+
       </div>
     );
   }

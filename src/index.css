@@ -8,6 +8,36 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.loginClass{
+border: 1px solid grey;
+padding: 10px;
+width: 620px;
+}
+
+.ViewListTaskClass {
+  border: 3px solid grey;
+  padding: 10px;
+  text-decoration: none;
+
+}
+
+.ViewListTaskClassLi {
+  border: 1px solid grey;
+
+  margin: 3px;
+}
+
+.ViewListTaskClassUl {
+  list-style-type: none;
+}
+
+.FilterTaskClass {
+  border: 1px solid grey;
+  padding: 10px;
+  margin: 5px;
+  width: 620px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
