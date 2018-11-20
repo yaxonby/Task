@@ -1,9 +1,13 @@
-
-
 import React, { Component } from 'react';
+import Login from "./Component/Login"
+import CreateNewTask from "./Component/CreateNewTask"
+import ViewListTask from "./Component/ViewListTask"
+
 import './App.css';
 
+
 let idTask=2;
+let viewTask=0;
 
 class App extends Component {
 
@@ -27,7 +31,8 @@ this.loginPasswordHandleChange=this.loginPasswordHandleChange.bind(this);
 this.AddCompleteTask=this.AddCompleteTask.bind(this);
 this.EditAdministrationTask=this.EditAdministrationTask.bind(this);
 this.SaveEditAdministrationTask=this.SaveEditAdministrationTask.bind(this);
-
+this.PreviousViewTask=this.PreviousViewTask.bind(this);
+this.NextViewTask=this.NextViewTask.bind(this);
   }
 
   userNameHandleChange(event) {
@@ -107,6 +112,20 @@ list: newTaskAddToList  })
  console.log("newTaskAddToList=", newTaskAddToList)
  console.log("state=", this.state)
 
+};
+
+NextViewTask() {
+//this.state.list.length
+if (this.state.list.length>3) {
+viewTask=3
+}
+
+}
+
+
+PreviousViewTask() {
+
+
 }
 
     FilterUserNameList() {
@@ -122,56 +141,51 @@ list: newTaskAddToList  })
     return (
 
   <div>
+<Login
+    administration={this.state.administration}
+    loginUsername={this.state.loginUsername}
+    loginPassword={this.state.loginPassword}
+    loginUserNameHandleChange={this.loginUserNameHandleChange}
+    loginPasswordHandleChange={this.loginPasswordHandleChange}
+    Entrance={this.Entrance} />
 
-        <div>
+<CreateNewTask
+    username={this.state.username}
+    email={this.state.email}
+    text={this.state.text}
+    image_path={this.state.image_path}
 
-          {self.state.administration ?  <div> Добро пожаловать, администратор. </div> :
-          <div>
-            Логин:    <input type="text"  value={this.state.loginUsername} onChange={this.loginUserNameHandleChange} placeholder="Вася"/>
-            Пароль:   <input type="text"  value={this.state.loginPassword} onChange={this.loginPasswordHandleChange} placeholder="Пароль"/>
-            <button onClick={this.Entrance}> Войти </button>
-         </div>
-          }
-        </div>
+    AddTaskToList={this.AddTaskToList}
+    userNameHandleChange={this.userNameHandleChange}
+    emailNandleChange={this.emailNandleChange}
+    taskHandleChange={this.taskHandleChange}
+    imageHandleChange={this.imageHandleChange} />
+
+<button onClick={this.FilterUserNameList}> по имени пользователя </button>
+<button onClick={this.FilterEmailUserList}> по email пользователя </button>
+<button onClick={this.FilterStatusTaskList}> по статусу </button>
+
+<ViewListTask
+  username={this.state.username}
+  email={this.state.email}
+  text={this.state.text}
+  image_path={this.state.image_path}
+  list={this.state.list}
+  NumberEditTask={this.state.NumberEditTask}
+
+  administration={this.state.administration}
+  EditAdministrationTask={this.EditAdministrationTask}
+  userNameHandleChange={this.userNameHandleChange}
+  emailNandleChange={this.emailNandleChange}
+  imageHandleChange={this.imageHandleChange}
+  taskHandleChange={this.taskHandleChange}
+  AddCompleteTask={this.AddCompleteTask}
+  SaveEditAdministrationTask={this.SaveEditAdministrationTask}
+/>
 
 
-        <label>
-            <p><b>Новая задача</b></p>
-            <div>
-              Имя:   <input type="text"  value={this.state.username} onChange={this.userNameHandleChange} placeholder="Вася"/> <br />
-              Почта:  <input type="email"  value={this.state.email} onChange={this.emailNandleChange}  placeholder="email@mail.com" /> <br />
-              Задача: <input type="text"  value={this.state.text} onChange={this.taskHandleChange}  placeholder="Сходить в кино"/> <br />
-              Загрузить иконку:  <input type="text" value={this.state.image_path} onChange={this.imageHandleChange}/>
-           </div>
-        </label>
-    <button onClick={PreviewListTask}> Предварительный просмотр</button>
-    <button onClick={this.AddTaskToList}> Отправить задачу </button> <br /> <br />
-    <button onClick={this.FilterUserNameList}> по имени пользователя </button>
-    <button onClick={this.FilterEmailUserList}> по email пользователя </button>
-    <button onClick={this.FilterStatusTaskList}> по статусу </button>
-
-
-<ul>
-
-{this.state.list.map(function(element, index) {
-  return (<li key={index}>
-
-    {self.state.administration ? <button onClick={self.EditAdministrationTask.bind(null, element)}> Редактировать </button> : <div>hi </div>}
-    {console.log("self.state.NumberEditTask",self.state.NumberEditTask, "element.id", element.id)}
-    {(self.state.NumberEditTask==element.id) ? <div>
-      <input type="text"  value={self.state.username} onChange={self.userNameHandleChange} placeholder={element.username}/>
-      Почта  <input type="email"  value={self.state.email} onChange={self.emailNandleChange}  placeholder={element.email} /> <br />
-      Задача <input type="text"  value={self.state.text} onChange={self.taskHandleChange}  placeholder={element.text}/> <br />
-      Загрузить иконку  <input type="text" value={self.state.image_path} onChange={self.imageHandleChange}/>  </div>:
-    element.username + element.email + element.text }
-    <img src={element.image_path} alt="картинка" width="100px" height="80px"/>
-
-    <button onClick={self.AddCompleteTask.bind(null, element)}> {(element.complete)? "выполнено" : "не выполнено"} </button>
-
-      { self.state.administration ? <button onClick={self.SaveEditAdministrationTask.bind(null, element)}> Сохранить </button> : <div> hi</div>}
-          </li>)
-        })}
-</ul>
+<button onClick={this.PreviousViewTask}> приведущие </button>
+<button onClick={this.NextViewTask}> следующие </button>
       </div>
     );
   }
