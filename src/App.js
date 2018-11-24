@@ -3,10 +3,7 @@ import Login from "./Component/Login";
 import CreateNewTask from "./Component/CreateNewTask";
 import ViewListTask from "./Component/ViewListTask";
 import FilterTask  from "./Component/FilterTask";
-
 import md5 from "blueimp-md5";
-//import blueimp-md5 from "blueimp-md5";
-//import md5 from "md5";
 //import axios from "axios";
 import './App.css';
 
@@ -24,7 +21,7 @@ this.state={ username: "", email:"", text:"", image_path:"",
 list: this.LoadTaskFromServer(),
 //list: this.props.taskList.list,
 loginUsername:"", loginPassword:"", administration: false,
-NumberEditTask: null, viewTask:3}
+NumberEditTask: null, viewTask:3,  imageCheck:true}
 
 this.userNameHandleChange = this.userNameHandleChange.bind(this);
 this.emailNandleChange = this.emailNandleChange.bind(this);
@@ -99,15 +96,22 @@ else {this.setState({list: loadlistjson  })}
 
 AddTaskToList() {
 
+let imageFile=document.getElementById("fileLoad").files[0];
+
+      if (imageFile.type==="image/jpeg") {
+console.log("imageFile.clientWidth", imageFile.clientWidth);
+console.log("imageFile.clientHeight", imageFile.clientHeight)
+  this.setState({  imageCheck: true})
+
       let newTask={
 //       id:  idTask,
        username: this.state.username,
        email: this.state.email,
        text: this.state.text,
-       image_path: document.getElementById("fileLoad").files[0],
+       image_path: imageFile,
        complete: false
       }
-      console.log(newTask)
+      console.log("type=",imageFile.type)
 //let newTaskAddToList=[ ...this.state.list, newTask     ]
 
 this.setState({username: "", email:"", text:"", image_path:""})
@@ -130,7 +134,13 @@ console.log(form)
 request.send(form);
 
 this.LoadTaskFromServer ()
+
+}
+else {
+  this.setState({  imageCheck: false})
+  }
   };
+
 
     Entrance () {
   if (this.state.loginUsername==="admin" && this.state.loginPassword==="123") {
@@ -255,6 +265,8 @@ let form = new FormData();
   console.log(form)
   request.send(form);
 
+  this.setState({username: "", email:"", text:"", image_path:"", NumberEditTask: null })
+
   this.LoadTaskFromServer ()
 
   //старая версия
@@ -299,6 +311,7 @@ NewStateFilter(listSort) {
     email={this.state.email}
     text={this.state.text}
     image_path={this.state.image_path}
+    imageCheck={this.state.imageCheck}
 
     AddTaskToList={this.AddTaskToList}
     userNameHandleChange={this.userNameHandleChange}
