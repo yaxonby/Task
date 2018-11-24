@@ -25,9 +25,6 @@ function FilterStatusTaskList() {
 	page
 	)
 
-		//	sort_field (id | username | email | status) - поле, по которому выполняется сортировка
-		//	sort_direction (asc | desc) - направление сортировки
-		//	page - номер страницы для пагинации
 
 //старая реализация
 /*
@@ -47,11 +44,6 @@ sort_field,
 sort_direction,
 page
 )
-
-	//	sort_field (id | username | email | status) - поле, по которому выполняется сортировка
-	//	sort_direction (asc | desc) - направление сортировки
-	//	page - номер страницы для пагинации
-
 
 /*
 	const request = new XMLHttpRequest();
@@ -113,11 +105,6 @@ function FilterEmailUserList(){
 	page
 	)
 
-		//	sort_field (id | username | email | status) - поле, по которому выполняется сортировка
-		//	sort_direction (asc | desc) - направление сортировки
-		//	page - номер страницы для пагинации
-
-
 		// сортировка по почте
 		/*
 			let listSort= list.sort(function(s,t) { // Сортировка без учета регистра символов
@@ -178,15 +165,28 @@ self.setState({
 */
 };
 
+
+function FilterAscDescTaskList () {
+
+		if (sort_direction==="asc") {sort_direction="desc"}
+		else {sort_direction="asc"}
+		LoadTaskFromServer(
+		url,
+		sort_field,
+		sort_direction,
+		page
+		)
+};
+
 		return (
 			<div className="FilterTaskClass">
+		 <button onClick={PreviousViewTask}> приведущие </button>
+		 <button onClick={NextViewTask}> следующие </button>
+		 <br />
 			<button onClick={FilterUserNameList}> фильтр по имени пользователя </button>
 			<button onClick={FilterEmailUserList}> фильтр по email пользователя </button>
 			<button onClick={FilterStatusTaskList}> фильтр по статусу </button>
-<br /><br />
-       <p> Задачи</p>
-			<button onClick={PreviousViewTask}> приведущие </button>
-			<button onClick={NextViewTask}> следующие </button>
+			<button onClick={FilterAscDescTaskList}> направление сортировки </button>
 			</div>
 		)
 	}

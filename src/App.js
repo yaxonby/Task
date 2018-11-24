@@ -3,6 +3,10 @@ import Login from "./Component/Login";
 import CreateNewTask from "./Component/CreateNewTask";
 import ViewListTask from "./Component/ViewListTask";
 import FilterTask  from "./Component/FilterTask";
+
+import md5 from "blueimp-md5";
+//import blueimp-md5 from "blueimp-md5";
+//import md5 from "md5";
 //import axios from "axios";
 import './App.css';
 
@@ -58,7 +62,7 @@ console.log(url, sort_field, sort_direction, page);
            loadlistjson = JSON.parse(request.response).message.tasks
            total_task_count = JSON.parse(request.response).message.total_task_count
             console.log(loadlistjson)
-          console.log(total_task_count)  
+          console.log(total_task_count)
           } else { console.log("Ответ сервера " + request.statusText)}
       }
   }
@@ -103,13 +107,10 @@ AddTaskToList() {
        image_path: document.getElementById("fileLoad").files[0],
        complete: false
       }
-
       console.log(newTask)
 //let newTaskAddToList=[ ...this.state.list, newTask     ]
 
 this.setState({username: "", email:"", text:"", image_path:""})
-
-
 var form = new FormData();
 form.append("username", newTask.username);
 form.append("email", newTask.email);
@@ -170,9 +171,94 @@ newList[element.id].complete=!newList[element.id].complete
 
 EditAdministrationTask (element) {
 this.setState({    NumberEditTask: element.id});
+console.log("element.id=", element.id)
 }
 
 SaveEditAdministrationTask (element) {
+  let newTask={
+   id:  element.id,
+   username: this.state.username,
+   email: this.state.email,
+   text: this.state.text,
+   image_path: this.state.image_path,
+   complete: element.complete,
+   status: element.status
+  }
+
+//Нужно передать в POST
+//text   //Осортировать по алфавиту
+//status //Осортировать по алфавиту
+
+//token="beejee"
+//"signature"
+
+
+
+
+  //Для генерации подписи нужно:
+
+//  url="https://uxcandy.com/~shapoval/test-task-backend/?developer=Yuriy"+"&"+
+
+let url="https://uxcandy.com/~shapoval/test-task-backend/edit/"+newTask.id+"?developer=Yuriy";
+console.log("url=", url)
+
+let params_string=
+    "status=" +
+    encodeURIComponent(newTask.status)  +
+    "&text=" +
+    encodeURIComponent(newTask.text) +
+    "&token=" +
+    encodeURIComponent("beejee");
+console.log("params_string=", params_string)
+let signature=md5(params_string);
+
+console.log("signature=", signature)
+//let urlTask="status="+newTask.status+"&"+"text="+ newTask.text+"&"+"token="+"beejee" ;
+//let params_string=encodeURIComponent(urlTask);
+
+
+//url=url+params_string;
+console.log("url=", url);
+
+/*
+const bodyWithoutSignature =
+    "status=" +
+    (status
+      ? encodeURIComponent(statusReady)
+      : encodeURIComponent(statusNotReady)) +
+    "&text=" +
+    encodeURIComponent(text) +
+    "&token=" +
+    encodeURIComponent(token);
+
+  const md5Hash = md5(bodyWithoutSignature);
+*/
+
+
+//encodeURIComponent(md5Hash)
+
+let form = new FormData();
+  form.append("status", encodeURIComponent(newTask.status));
+  form.append("text", encodeURIComponent(newTask.text));
+  form.append("token", encodeURIComponent("beejee"));
+  form.append("signature", signature);
+
+  const request = new XMLHttpRequest();
+  function reqReadyStateChange() {
+  if (request.readyState == 4 && request.status == 200)   {
+  console.log(JSON.parse(request.response));}
+}                                                                      //  (/edit/:id)
+  request.open("POST", url, false);
+  //    request.setRequestHeader('Content-Type', 'multipart/form-data');
+  //    request.setRequestHeader("Content-Type", "text/plain");
+  request.onreadystatechange = reqReadyStateChange;
+  console.log(form)
+  request.send(form);
+
+  this.LoadTaskFromServer ()
+
+  //старая версия
+  /*
   let newTask={
    id:  element.id,
    username: this.state.username,
@@ -186,6 +272,8 @@ let newTaskAddToList=[ ...this.state.list]
 newTaskAddToList[element.id]=newTask
 this.setState({username: "", email:"", text:"", image_path:"", NumberEditTask: null,
 list: newTaskAddToList  })
+*/
+
 };
 
 NewStateFilter(listSort) {
@@ -193,12 +281,7 @@ NewStateFilter(listSort) {
  };
 
   render() {
-//console.log(count)
-  //  if (count=0) {this.LoadTaskFromServer(); count=count+1;
-//    console.log(count)}
 
-//    const self=this;
-//    function PreviewListTask() {    }
 
     return (
 
