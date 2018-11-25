@@ -9,21 +9,19 @@ body {
 }
 
 .loginClass{
-border: 1px solid grey;
+border: 1px solid lightgrey;
 padding: 10px;
 width: 620px;
 }
 
 .ViewListTaskClass {
-  border: 3px solid grey;
+  border: 2px solid silver;
   padding: 10px;
   text-decoration: none;
-
 }
 
 .ViewListTaskClassLi {
-  border: 1px solid grey;
-
+  border: 1px solid lightgrey;
   margin: 3px;
 }
 
@@ -32,11 +30,26 @@ width: 620px;
 }
 
 .FilterTaskClass {
-  border: 1px solid grey;
+  border: 1px solid lightgrey;
   padding: 5px;
-margin: 5px;
+  margin: 5px;
   width: 1100px;
 }
+
+img {
+  border: 1px solid black;
+}
+
+button {
+  padding: .2em 1.1em; /* отступ от текста */
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: gray  ; /* фон кнопки */
+  outline: none; /* убирать контур в Mozilla */
+}
+button:hover { background: silver ; } /* при наведении курсора мышки */
+button:active { background: gainsboro  ; } /* при нажатии */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",

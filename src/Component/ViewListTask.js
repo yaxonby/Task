@@ -3,9 +3,9 @@ import {Component} from "react"
 
 
 export default class ViewListTask extends Component {
-
+//username, email, image_path,
 	render () {
-		const {username, email, text, image_path, list, viewTask,
+		const { text,  list, viewTask,
 					userNameHandleChange, emailNandleChange,taskHandleChange, imageHandleChange,
 					administration, EditAdministrationTask, NumberEditTask,
 					AddCompleteTask, SaveEditAdministrationTask}=this.props;
@@ -20,13 +20,13 @@ export default class ViewListTask extends Component {
           <li key={index} className="ViewListTaskClassLi">
 			    {administration ? <button onClick={EditAdministrationTask.bind(null, element)}> Редактировать </button> : <div> </div>}
 			    {(NumberEditTask===element.id) ? <div>
-			      element.username  element.email
+			      {element.username} &ensp; {element.email} &ensp;
 			      Задача <input type="text"  value={text} onChange={taskHandleChange}  placeholder={element.text}/> <br />
-			      </div>:
-			     element.username + element.email + element.text }
+			      </div>: <div style={{display:"inline"}}>
+			     {element.username} &ensp; {element.email} &ensp; {element.text} </div>}
 
 			    <img src={element.image_path} alt="картинка" width="100px" height="80px"/>
-			    <button onClick={AddCompleteTask.bind(null, element)}> {(element.complete)? "выполнено" : "не выполнено"} </button>
+			    <button onClick={AddCompleteTask.bind(null, element)}> {(element.status===0)? "выполнено" : "не выполнено"} </button>
 			      { administration ? <button onClick={SaveEditAdministrationTask.bind(null, element)}> Сохранить </button> : <div></div>}
 			          </li>)}
                 else {
@@ -37,15 +37,3 @@ export default class ViewListTask extends Component {
 		)
 	}
 }
-
-
-
-/*
-
-{(NumberEditTask===element.id) ? <div>
-	<input type="text"  value={username} onChange={userNameHandleChange} placeholder={element.username}/>
-	Почта  <input type="email"  value={email} onChange={emailNandleChange}  placeholder={element.email} /> <br />
-	Задача <input type="text"  value={text} onChange={taskHandleChange}  placeholder={element.text}/> <br />
-	Загрузить иконку  <input type="file" value={image_path} id="fileLoad" onChange={imageHandleChange}/>  </div>:
-element.username + element.email + element.text }
-*/
