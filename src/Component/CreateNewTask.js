@@ -4,9 +4,10 @@ import {Component} from "react"
 
 export default class CreateNewTask extends Component {
 //image_path,
+//imageHandleChange,
 	render () {
 		const {userNameHandleChange, username, email, text,  emailNandleChange,
-			taskHandleChange, imageHandleChange, AddTaskToList, imageCheck, preView,
+			taskHandleChange,  AddTaskToList, imageCheck, preView,
 			PreViewTaskToList}=this.props
 
 var img
@@ -15,13 +16,13 @@ window.onload = function() {
  imageFile=document.getElementById("fileLoad").files[0];
 
   var photo_input = document.getElementById('fileLoad');
-let self;
+//let self;
 			photo_input.onchange = function() {
 			    var reader = new FileReader();
 			    reader.onload = function(e) {
 			       img = document.createElement('img');
 			      img.onload = function() {
-					 self=this;
+				//	 self=this;
 			        console.log(this.width+'x'+this.height);
 						if (this.width>320 || this.height>240) {this.width=320; this.height=240}
 					  };

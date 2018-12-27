@@ -43,6 +43,8 @@ sort_field="username",
 sort_direction="asc",
 page=1
 ) {
+
+ 
   const request = new XMLHttpRequest();
   var loadlistjson;
 
@@ -55,11 +57,19 @@ page=1
           } else { console.log("Ответ сервера " + request.statusText)}
       }
   }
-  url="https://uxcandy.com/~shapoval/test-task-backend/?developer=Yuriy"+"&"+"sort_field="+
-  sort_field+"&"+"sort_direction="+sort_direction+"&"+"page="+page ;
+  url="https://uxcandy.com/~shapoval/test-task-backend/?developer=Yuriy"+"&"+"sort_field="+sort_field+"&"+"sort_direction="+sort_direction+"&"+"page="+page ;
   request.open("GET", url, false);
   request.onreadystatechange = req;
   request.send();
+
+ 
+  fetch(url)
+  .then((response)=>{
+  response.json().then((data)=> console.log('data-', data))
+  })
+  .catch((err)=> console.log("error...", err))
+
+
 
     for (let i=0; i<loadlistjson.length; i++) {
     loadlistjson[i].complete=false

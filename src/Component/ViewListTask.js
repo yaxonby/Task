@@ -4,9 +4,9 @@ import {Component} from "react"
 
 export default class ViewListTask extends Component {
 //username, email, image_path,
+//userNameHandleChange, emailNandleChange, imageHandleChange,
 	render () {
-		const { text,  list, viewTask,
-					userNameHandleChange, emailNandleChange,taskHandleChange, imageHandleChange,
+		const { text,  list, viewTask, taskHandleChange,  
 					administration, EditAdministrationTask, NumberEditTask,
 					AddCompleteTask, SaveEditAdministrationTask}=this.props;
 
